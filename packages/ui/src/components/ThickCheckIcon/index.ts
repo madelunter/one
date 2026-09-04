@@ -1,0 +1,1 @@
+export { ThickCheckIcon } from "./ThickCheckIcon";

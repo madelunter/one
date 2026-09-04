@@ -1,0 +1,1 @@
+export { ThickChevronRightIcon } from "./ThickChevronRightIcon";

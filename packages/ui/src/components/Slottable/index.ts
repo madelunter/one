@@ -1,0 +1,1 @@
+export { Slottable } from "./Slottable";

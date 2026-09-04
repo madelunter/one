@@ -2,8 +2,8 @@ import { Theme, type ThemeProps } from "@radix-ui/themes";
 
 export function ThemeProvider({
   appearance = "light",
-  accentColor = "indigo",
-  grayColor = "slate",
+  accentColor = "blue",
+  grayColor = "gray",
   radius = "medium",
   scaling = "100%",
   ...props
