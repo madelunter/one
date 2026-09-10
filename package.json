@@ -13,6 +13,7 @@
     "storybook": "pnpm --filter storybook storybook",
     "build-storybook": "pnpm --filter storybook build-storybook",
     "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm --filter storybook test",
     "lint": "eslint .",
     "guard:persona-naming": "node scripts/check-persona-naming.mjs"
   },

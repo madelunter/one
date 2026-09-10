@@ -13,6 +13,11 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   test: {
+    // The Playwright browser provider shares one browser instance across
+    // files; running story files concurrently races on "current suite"
+    // tracking and fails intermittently (confirmed: 7/7 files fail together,
+    // every file passes individually). Serializing files avoids the race.
+    fileParallelism: false,
     projects: [
       {
         extends: true,

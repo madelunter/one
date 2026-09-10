@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/test";
 import { Checkbox, ThemeProvider } from "@oneds/ui";
 
 const meta: Meta<typeof Checkbox> = {
@@ -19,14 +20,24 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvas, userEvent }) => {
+    const checkbox = canvas.getByRole("checkbox");
+    await expect(checkbox).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(checkbox);
+    await expect(checkbox).toHaveAttribute("aria-checked", "true");
+  }
+};
 
 export const Checked: Story = {
   args: { defaultChecked: true }
 };
 
 export const Indeterminate: Story = {
-  args: { defaultChecked: "indeterminate" }
+  args: { defaultChecked: "indeterminate" },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole("checkbox")).toHaveAttribute("aria-checked", "mixed");
+  }
 };
 
 export const Disabled: Story = {

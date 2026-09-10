@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/test";
 import { Button, ThemeProvider } from "@oneds/ui";
 
 const meta: Meta<typeof Button> = {
@@ -24,7 +25,24 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvas, args }) => {
+    await expect(canvas.getByRole("button", { name: args.children as string })).toBeVisible();
+  }
+};
+
+// The only CssCheck in the project (per convention, exactly one) — proves
+// the shared preview actually loaded @oneds/ui's compiled stylesheet,
+// specifically the custom-colors.css override, not just Radix's stock
+// "blue" scale. toBeVisible() alone can't tell the two apart; this can.
+export const CssCheck: Story = {
+  args: { variant: "solid" },
+  play: async ({ canvas, args }) => {
+    const button = canvas.getByRole("button", { name: args.children as string });
+    // custom-colors.css sets --blue-9 (accent-9) to #0B49EA = rgb(11, 73, 234)
+    await expect(getComputedStyle(button).backgroundColor).toBe("rgb(11, 73, 234)");
+  }
+};
 
 export const Variants: Story = {
   render: (args) => (

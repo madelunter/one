@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState, type CSSProperties, type ComponentPropsWithoutRef } from "react";
+import { expect } from "storybook/test";
 import {
   Accordion,
   AccessibleIcon,
@@ -127,6 +128,13 @@ export const AccordionStory: Story = {
       ))}
     </Accordion.Root>
   ),
+  play: async ({ canvas, userEvent }) => {
+    const section2Trigger = canvas.getByRole("button", { name: "Section 2" });
+    await expect(section2Trigger).toHaveAttribute("aria-expanded", "false");
+    await userEvent.click(section2Trigger);
+    await expect(section2Trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(canvas.getByText("Content for section 2.")).toBeVisible();
+  },
 };
 
 export const AccessibleIconStory: Story = {
@@ -779,4 +787,9 @@ function ToastDemo() {
 export const ToastStory: Story = {
   name: "Toast",
   render: () => <ToastDemo />,
+  play: async ({ canvas, userEvent }) => {
+    await expect(canvas.queryByText("Your changes have been saved.")).not.toBeInTheDocument();
+    await userEvent.click(canvas.getByRole("button", { name: "Show toast" }));
+    await expect(await canvas.findByText("Your changes have been saved.")).toBeVisible();
+  },
 };
