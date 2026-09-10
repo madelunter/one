@@ -34,6 +34,12 @@ import {
   Theme
 } from "@oneds/ui";
 
+interface DashboardArgs {
+  teamMemberCount: number;
+  financePinned: boolean;
+  activityPinned: boolean;
+}
+
 /**
  * A faithful adaptation of https://www.radix-ui.com/themes/example-dashboard
  * (source: github.com/radix-ui/website/blob/main/components/example-themes-dashboard.tsx),
@@ -42,13 +48,37 @@ import {
  * of real photos (no external image dependency), and dropdown/menu content
  * portals to document.body by default instead of a same-tree container ref
  * (matches how every other overlay story in this project already works).
+ *
+ * The controls below seed this story's internal state at mount — the
+ * dashboard is a real interactive composition (pins toggle, to-dos check
+ * off), not a pure function of props, so changing a control remounts the
+ * story with a fresh initial state rather than live-patching it.
  */
-const meta: Meta = {
-  title: "Examples/Dashboard"
+const meta: Meta<DashboardArgs> = {
+  title: "Examples/Dashboard",
+  argTypes: {
+    teamMemberCount: {
+      control: { type: "range", min: 1, max: 5, step: 1 },
+      description: "Number of rows shown in the \"Your team\" card"
+    },
+    financePinned: {
+      control: "boolean",
+      description: "Initial pinned state of the Financial performance panel"
+    },
+    activityPinned: {
+      control: "boolean",
+      description: "Initial pinned state of the Recent activity panel"
+    }
+  },
+  args: {
+    teamMemberCount: 5,
+    financePinned: false,
+    activityPinned: true
+  }
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<DashboardArgs>;
 
 const people = [
   "Emmeline Labrie",
@@ -288,7 +318,7 @@ const activity = [
 ];
 
 export const Dashboard: Story = {
-  render: () => {
+  render: (args) => {
     const [todo, setTodo] = useState<ToDoItem[]>([
       { id: "a", completed: false },
       { id: "b", completed: false },
@@ -297,15 +327,22 @@ export const Dashboard: Story = {
       { id: "e", completed: true },
       { id: "f", completed: true }
     ]);
-    const [activityPinned, setActivityPinned] = useState(true);
-    const [financePinned, setFinancePinned] = useState(false);
+    const [activityPinned, setActivityPinned] = useState(args.activityPinned);
+    const [financePinned, setFinancePinned] = useState(args.financePinned);
 
     return (
+      // key forces a remount (and so a fresh useState seed) whenever a
+      // control changes, since these args only seed initial state.
       // Stacks to a single column below Radix's "xl" breakpoint, so the
       // dashboard doesn't force horizontal overflow on tablet/mobile
       // viewports; each column-stack still caps at its original width once
       // there's room for all three side by side.
-      <Grid columns={{ initial: "1", xl: "3" }} gap="6" width="100%">
+      <Grid
+        key={`${args.teamMemberCount}-${args.financePinned}-${args.activityPinned}`}
+        columns={{ initial: "1", xl: "3" }}
+        gap="6"
+        width="100%"
+      >
         {/* Column 1 */}
         <Flex gap="6" direction="column" width="100%" maxWidth="640px">
           <Card size="4">
@@ -322,7 +359,7 @@ export const Dashboard: Story = {
               <Button size="2">Invite</Button>
             </Flex>
             <Flex direction="column">
-              {[4, 2, 12, 20, 16].map((index, i, arr) => (
+              {[4, 2, 12, 20, 16].slice(0, args.teamMemberCount).map((index, i, arr) => (
                 <Box key={index}>
                   <Flex gap="4" align="center">
                     <Flex gap="3" align="center" width="200px">
