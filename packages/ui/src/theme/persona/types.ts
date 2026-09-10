@@ -4,6 +4,7 @@ type ThemeAccentColor = NonNullable<ThemeProps["accentColor"]>;
 type ThemeGrayColor = NonNullable<ThemeProps["grayColor"]>;
 type ThemeRadius = NonNullable<ThemeProps["radius"]>;
 type ThemeScaling = NonNullable<ThemeProps["scaling"]>;
+type ThemePanelBackground = NonNullable<ThemeProps["panelBackground"]>;
 
 /**
  * base is the shared foundation every other persona inherits from.
@@ -22,6 +23,8 @@ export interface PersonaThemeConfig {
   radius: ThemeRadius;
   /** Maps to Radix Themes' own `scaling` prop */
   scaling: ThemeScaling;
+  /** Maps to Radix Themes' own `panelBackground` prop */
+  panelBackground: ThemePanelBackground;
   /** Not covered by Radix Themes — exposed as --control-padding-y */
   controlPaddingY: string;
   /** Not covered by Radix Themes — exposed as --table-row-height */

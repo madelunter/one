@@ -6,12 +6,12 @@ import type { Persona } from "./persona/types";
 export interface OneDsThemeProps extends ThemeProps {
   /**
    * base is the shared foundation; personaB2B/personaB2C override it.
-   * Resolves a preset accentColor/grayColor/radius/scaling (passed through
-   * to Radix's own <Theme> props) plus a set of component tokens Radix
-   * doesn't cover (--control-padding-y, --table-row-height,
-   * --motion-standard). Explicit accentColor/grayColor/radius/scaling props
-   * below still win over the persona preset — that's the governed
-   * "override" escape hatch, not the default path.
+   * Resolves a preset accentColor/grayColor/radius/scaling/panelBackground
+   * (passed through to Radix's own <Theme> props) plus a set of component
+   * tokens Radix doesn't cover (--control-padding-y, --table-row-height,
+   * --motion-standard). Explicit accentColor/grayColor/radius/scaling/
+   * panelBackground props below still win over the persona preset — that's
+   * the governed "override" escape hatch, not the default path.
    */
   persona?: Persona;
 }
@@ -23,6 +23,7 @@ export function ThemeProvider({
   grayColor,
   radius,
   scaling,
+  panelBackground,
   style,
   ...props
 }: OneDsThemeProps) {
@@ -35,6 +36,7 @@ export function ThemeProvider({
       grayColor={grayColor ?? config.grayColor}
       radius={radius ?? config.radius}
       scaling={scaling ?? config.scaling}
+      panelBackground={panelBackground ?? config.panelBackground}
       data-persona={persona}
       style={
         {
