@@ -1,0 +1,11 @@
+/*
+ * Auto-responsive grid: items wrap onto new rows purely from available
+ * width, no breakpoint props needed (unlike Radix Themes' Grid, which needs
+ * an explicit column count per breakpoint). The `min()` guards against
+ * horizontal overflow on viewports narrower than --flex-grid-min-item-width.
+ */
+.root {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--flex-grid-min-item-width, 240px), 100%), 1fr));
+  gap: var(--flex-grid-gap, var(--space-4));
+}

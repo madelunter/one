@@ -20,6 +20,7 @@ import {
   DropdownMenu,
   Em,
   Flex,
+  FlexGrid,
   Grid,
   Heading,
   HoverCard,
@@ -175,7 +176,9 @@ export const ContainerStory: Story = {
 export const FlexStory: Story = {
   name: "Flex",
   render: () => (
-    <Flex gap="3">
+    // direction flips from stacked (mobile) to a row once the viewport
+    // reaches Radix's "sm" breakpoint — resize the canvas to see it change.
+    <Flex direction={{ initial: "column", sm: "row" }} gap="3">
       <Box style={swatchStyle}>1</Box>
       <Box style={swatchStyle}>2</Box>
       <Box style={swatchStyle}>3</Box>
@@ -186,13 +189,42 @@ export const FlexStory: Story = {
 export const GridStory: Story = {
   name: "Grid",
   render: () => (
-    <Grid columns="3" gap="3" width="220px">
+    // 1 column on mobile, 2 at "sm", 3 at "md" — Radix Themes' responsive
+    // breakpoint-object syntax, no custom media queries needed.
+    <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="3" width="100%" maxWidth="220px">
       {[1, 2, 3].map((n) => (
         <Box key={n} style={swatchStyle}>
           {n}
         </Box>
       ))}
     </Grid>
+  ),
+};
+
+export const FlexGridStory: Story = {
+  name: "FlexGrid",
+  render: () => (
+    // Auto-wraps purely from available width — no columns/breakpoint props
+    // to set. Try resizing the canvas (or the Storybook viewport toolbar):
+    // items reflow continuously instead of snapping at fixed breakpoints.
+    <FlexGrid minItemWidth="120px" gap="3" style={{ width: "100%", maxWidth: 500 }}>
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+        <Box
+          key={n}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: 48,
+            borderRadius: 4,
+            background: "var(--accent-4)",
+            color: "var(--accent-11)"
+          }}
+        >
+          {n}
+        </Box>
+      ))}
+    </FlexGrid>
   ),
 };
 
@@ -208,7 +240,7 @@ export const SectionStory: Story = {
 export const InsetStory: Story = {
   name: "Inset",
   render: () => (
-    <Card style={{ width: 260 }}>
+    <Card style={{ width: "100%", maxWidth: 260 }}>
       <Inset side="top" pb="current">
         <div style={{ height: 80, background: "var(--accent-4)" }} />
       </Inset>
@@ -222,7 +254,7 @@ export const InsetStory: Story = {
 export const AspectRatioStory: Story = {
   name: "AspectRatio",
   render: () => (
-    <Box width="240px">
+    <Box width="100%" maxWidth="240px">
       <AspectRatio ratio={16 / 9}>
         <div style={{ width: "100%", height: "100%", background: "var(--accent-9)", borderRadius: 4 }} />
       </AspectRatio>
@@ -233,7 +265,7 @@ export const AspectRatioStory: Story = {
 export const ScrollAreaStory: Story = {
   name: "ScrollArea",
   render: () => (
-    <ScrollArea type="always" style={{ height: 120, width: 300 }}>
+    <ScrollArea type="always" style={{ height: 120, width: "100%", maxWidth: 300 }}>
       <Box p="3">
         {Array.from({ length: 20 }).map((_, i) => (
           <Text as="p" key={i}>
@@ -271,7 +303,7 @@ export const BadgeStory: Story = {
 export const CardStory: Story = {
   name: "Card",
   render: () => (
-    <Card style={{ width: 260 }}>
+    <Card style={{ width: "100%", maxWidth: 260 }}>
       <Text as="p">Card content goes here.</Text>
     </Card>
   ),
@@ -320,7 +352,7 @@ export const TableStory: Story = {
 export const CheckboxCardsStory: Story = {
   name: "CheckboxCards",
   render: () => (
-    <CheckboxCards.Root defaultValue={["1"]} columns="2" style={{ width: 300 }}>
+    <CheckboxCards.Root defaultValue={["1"]} columns="2" style={{ width: "100%", maxWidth: 300 }}>
       <CheckboxCards.Item value="1">Option 1</CheckboxCards.Item>
       <CheckboxCards.Item value="2">Option 2</CheckboxCards.Item>
     </CheckboxCards.Root>
@@ -330,7 +362,7 @@ export const CheckboxCardsStory: Story = {
 export const RadioCardsStory: Story = {
   name: "RadioCards",
   render: () => (
-    <RadioCards.Root defaultValue="1" columns="2" style={{ width: 300 }}>
+    <RadioCards.Root defaultValue="1" columns="2" style={{ width: "100%", maxWidth: 300 }}>
       <RadioCards.Item value="1">Option 1</RadioCards.Item>
       <RadioCards.Item value="2">Option 2</RadioCards.Item>
     </RadioCards.Root>
@@ -351,12 +383,12 @@ export const CalloutStory: Story = {
 
 export const TextFieldStory: Story = {
   name: "TextField",
-  render: () => <TextField.Root placeholder="Search…" style={{ width: 220 }} />,
+  render: () => <TextField.Root placeholder="Search…" style={{ width: "100%", maxWidth: 220 }} />,
 };
 
 export const TextAreaStory: Story = {
   name: "TextArea",
-  render: () => <TextArea placeholder="Write a comment…" style={{ width: 260 }} />,
+  render: () => <TextArea placeholder="Write a comment…" style={{ width: "100%", maxWidth: 260 }} />,
 };
 
 export const RadioStory: Story = {
@@ -419,12 +451,12 @@ export const SegmentedControlStory: Story = {
 
 export const SliderStory: Story = {
   name: "Slider",
-  render: () => <Slider defaultValue={[40]} style={{ width: 260 }} />,
+  render: () => <Slider defaultValue={[40]} style={{ width: "100%", maxWidth: 260 }} />,
 };
 
 export const ProgressStory: Story = {
   name: "Progress",
-  render: () => <Progress value={60} style={{ width: 260 }} />,
+  render: () => <Progress value={60} style={{ width: "100%", maxWidth: 260 }} />,
 };
 
 export const SpinnerStory: Story = {
@@ -534,7 +566,8 @@ export const ContextMenuStory: Story = {
             borderRadius: 4,
             padding: 24,
             textAlign: "center",
-            width: 300,
+            width: "100%",
+            maxWidth: 300,
           }}
         >
           Right-click here
@@ -594,7 +627,7 @@ export const TooltipStory: Story = {
 export const TabsStory: Story = {
   name: "Tabs",
   render: () => (
-    <Tabs.Root defaultValue="account" style={{ width: 300 }}>
+    <Tabs.Root defaultValue="account" style={{ width: "100%", maxWidth: 300 }}>
       <Tabs.List>
         <Tabs.Trigger value="account">Account</Tabs.Trigger>
         <Tabs.Trigger value="documents">Documents</Tabs.Trigger>
