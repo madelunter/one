@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect } from "storybook/test";
 import { Switch, ThemeProvider } from "@oneds/ui";
 
 const meta: Meta<typeof Switch> = {
@@ -19,7 +20,14 @@ const meta: Meta<typeof Switch> = {
 export default meta;
 type Story = StoryObj<typeof Switch>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  play: async ({ canvas, userEvent }) => {
+    const switchControl = canvas.getByRole("switch");
+    await expect(switchControl).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(switchControl);
+    await expect(switchControl).toHaveAttribute("aria-checked", "true");
+  }
+};
 
 export const Checked: Story = {
   args: { defaultChecked: true }

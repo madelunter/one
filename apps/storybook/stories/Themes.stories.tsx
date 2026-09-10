@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ComponentPropsWithoutRef } from "react";
+import { expect, waitFor, within } from "storybook/test";
 import {
   AccessibleIcon,
   AlertDialog,
@@ -436,6 +437,12 @@ export const SelectStory: Story = {
       </Select.Content>
     </Select.Root>
   ),
+  play: async ({ canvas, userEvent, canvasElement }) => {
+    await userEvent.click(canvas.getByRole("combobox"));
+    const body = within(canvasElement.ownerDocument.body);
+    await userEvent.click(await body.findByText("Banana"));
+    await expect(canvas.getByRole("combobox")).toHaveTextContent("Banana");
+  },
 };
 
 export const SegmentedControlStory: Story = {
@@ -536,6 +543,15 @@ export const DialogStory: Story = {
       </Dialog.Content>
     </Dialog.Root>
   ),
+  play: async ({ canvas, userEvent, canvasElement }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Edit profile" }));
+    const body = within(canvasElement.ownerDocument.body);
+    const dialog = await body.findByRole("dialog");
+    // Radix animates the enter transition; data-state="open" flips before
+    // opacity/transform settle, so give toBeVisible a moment to catch up.
+    await waitFor(() => expect(dialog).toBeVisible());
+    await expect(within(dialog).getByText("Make changes to your profile.")).toBeVisible();
+  },
 };
 
 export const DropdownMenuStory: Story = {
@@ -553,6 +569,13 @@ export const DropdownMenuStory: Story = {
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   ),
+  play: async ({ canvas, userEvent, canvasElement }) => {
+    await userEvent.click(canvas.getByRole("button", { name: "Options" }));
+    const body = within(canvasElement.ownerDocument.body);
+    const editItem = await body.findByText("Edit");
+    await waitFor(() => expect(editItem).toBeVisible());
+    await expect(body.getByText("Delete")).toBeVisible();
+  },
 };
 
 export const ContextMenuStory: Story = {
@@ -640,6 +663,11 @@ export const TabsStory: Story = {
       </Tabs.Content>
     </Tabs.Root>
   ),
+  play: async ({ canvas, userEvent }) => {
+    await expect(canvas.getByText("Account content.")).toBeVisible();
+    await userEvent.click(canvas.getByRole("tab", { name: "Documents" }));
+    await expect(canvas.getByText("Documents content.")).toBeVisible();
+  },
 };
 
 export const TabNavStory: Story = {

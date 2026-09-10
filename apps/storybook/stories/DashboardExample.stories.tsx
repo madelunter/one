@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState, type CSSProperties, type ReactNode } from "react";
+import { expect } from "storybook/test";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -814,5 +815,11 @@ export const Dashboard: Story = {
         </Flex>
       </Grid>
     );
+  },
+  play: async ({ canvas, userEvent }) => {
+    const firstTodo = canvas.getByRole("checkbox", { name: /Respond to comment/ });
+    await expect(firstTodo).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(firstTodo);
+    await expect(firstTodo).toHaveAttribute("aria-checked", "true");
   }
 };
