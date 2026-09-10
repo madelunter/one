@@ -108,7 +108,7 @@ const buttonStyle: CSSProperties = {
 export const AccordionStory: Story = {
   name: "Accordion",
   render: () => (
-    <Accordion.Root type="single" collapsible defaultValue="item-1" style={{ width: 320 }}>
+    <Accordion.Root type="single" collapsible defaultValue="item-1" style={{ width: "100%", maxWidth: 320 }}>
       {["item-1", "item-2", "item-3"].map((value, i) => (
         <Accordion.Item
           key={value}
@@ -173,7 +173,7 @@ export const AlertDialogStory: Story = {
 export const AspectRatioStory: Story = {
   name: "AspectRatio",
   render: () => (
-    <div style={{ width: 300 }}>
+    <div style={{ width: "100%", maxWidth: 300 }}>
       <AspectRatio.Root ratio={16 / 9}>
         <div
           style={{
@@ -240,7 +240,7 @@ export const CheckboxStory: Story = {
 export const CollapsibleStory: Story = {
   name: "Collapsible",
   render: () => (
-    <Collapsible.Root style={{ width: 300 }}>
+    <Collapsible.Root style={{ width: "100%", maxWidth: 300 }}>
       <Collapsible.Trigger asChild>
         <button style={buttonStyle}>Toggle details</button>
       </Collapsible.Trigger>
@@ -262,7 +262,8 @@ export const ContextMenuStory: Story = {
           padding: 24,
           textAlign: "center",
           fontSize: 14,
-          width: 300,
+          width: "100%",
+          maxWidth: 300,
         }}
       >
         Right-click here
@@ -307,7 +308,7 @@ export const DirectionStory: Story = {
       <p style={{ fontSize: 12, color: "var(--gray-11)", marginTop: 0 }}>
         dir=&quot;rtl&quot; propagated to descendant primitives (Tabs below reads right-to-left):
       </p>
-      <Tabs.Root defaultValue="tab1" style={{ width: 300 }}>
+      <Tabs.Root defaultValue="tab1" style={{ width: "100%", maxWidth: 300 }}>
         <Tabs.List style={{ display: "flex", borderBottom: "1px solid var(--gray-6)" }}>
           <Tabs.Trigger value="tab1" style={menuTriggerStyle}>
             Tab 1
@@ -350,7 +351,7 @@ export const FormStory: Story = {
   name: "Form",
   render: () => (
     <Form.Root
-      style={{ display: "flex", flexDirection: "column", gap: 8, width: 300 }}
+      style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%", maxWidth: 300 }}
       onSubmit={(e) => e.preventDefault()}
     >
       <Form.Field name="email">
@@ -395,7 +396,7 @@ export const HoverCardStory: Story = {
 export const LabelStory: Story = {
   name: "Label",
   render: () => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 4, width: 220 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 4, width: "100%", maxWidth: 220 }}>
       <Label.Root htmlFor="primitive-label-input" style={{ fontSize: 14 }}>
         Name
       </Label.Root>
@@ -502,7 +503,8 @@ export const ProgressStory: Story = {
     <Progress.Root
       value={60}
       style={{
-        width: 300,
+        width: "100%",
+        maxWidth: 300,
         height: 8,
         background: "var(--gray-4)",
         borderRadius: 4,
@@ -562,7 +564,7 @@ export const ScrollAreaStory: Story = {
   name: "ScrollArea",
   render: () => (
     <ScrollArea.Root
-      style={{ width: 300, height: 120, border: "1px solid var(--gray-6)", borderRadius: 4 }}
+      style={{ width: "100%", maxWidth: 300, height: 120, border: "1px solid var(--gray-6)", borderRadius: 4 }}
     >
       <ScrollArea.Viewport style={{ width: "100%", height: "100%" }}>
         <div style={{ padding: 12, fontSize: 14 }}>
@@ -617,7 +619,7 @@ export const SelectStory: Story = {
 export const SeparatorStory: Story = {
   name: "Separator",
   render: () => (
-    <div style={{ width: 300, fontSize: 14 }}>
+    <div style={{ width: "100%", maxWidth: 300, fontSize: 14 }}>
       <p style={{ margin: 0 }}>Above</p>
       <Separator.Root style={{ height: 1, background: "var(--gray-6)", margin: "8px 0" }} />
       <p style={{ margin: 0 }}>Below</p>
@@ -636,7 +638,8 @@ export const SliderStory: Story = {
         position: "relative",
         display: "flex",
         alignItems: "center",
-        width: 300,
+        width: "100%",
+        maxWidth: 300,
         height: 20,
       }}
     >
@@ -722,7 +725,7 @@ export const SwitchStory: Story = {
 export const TabsStory: Story = {
   name: "Tabs",
   render: () => (
-    <Tabs.Root defaultValue="tab1" style={{ width: 300 }}>
+    <Tabs.Root defaultValue="tab1" style={{ width: "100%", maxWidth: 300 }}>
       <Tabs.List style={{ display: "flex", borderBottom: "1px solid var(--gray-6)" }}>
         <Tabs.Trigger value="tab1" style={menuTriggerStyle}>
           Tab 1

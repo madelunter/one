@@ -301,9 +301,13 @@ export const Dashboard: Story = {
     const [financePinned, setFinancePinned] = useState(false);
 
     return (
-      <Flex align="start" gap="6">
+      // Stacks to a single column below Radix's "xl" breakpoint, so the
+      // dashboard doesn't force horizontal overflow on tablet/mobile
+      // viewports; each column-stack still caps at its original width once
+      // there's room for all three side by side.
+      <Grid columns={{ initial: "1", xl: "3" }} gap="6" width="100%">
         {/* Column 1 */}
-        <Flex flexShrink="0" gap="6" direction="column" width="640px">
+        <Flex gap="6" direction="column" width="100%" maxWidth="640px">
           <Card size="4">
             <Heading as="h3" size="6" trim="start" mb="2">
               Your team
@@ -451,7 +455,7 @@ export const Dashboard: Story = {
         </Flex>
 
         {/* Column 2 */}
-        <Flex flexShrink="0" gap="6" direction="column" width="416px">
+        <Flex gap="6" direction="column" width="100%" maxWidth="416px">
           <Card size="4">
             <Heading as="h3" size="6" trim="start" mb="5">
               Sign up
@@ -650,7 +654,7 @@ export const Dashboard: Story = {
         </Flex>
 
         {/* Column 3 */}
-        <Flex flexShrink="0" gap="6" direction="column" width="640px">
+        <Flex gap="6" direction="column" width="100%" maxWidth="640px">
           <Card size="4" style={{ position: "relative" }}>
             <Heading as="h3" size="6" trim="start" mb="2">
               Financial performance
@@ -771,7 +775,7 @@ export const Dashboard: Story = {
             <ToDoList items={todo} onItemsChange={setTodo} />
           </Card>
         </Flex>
-      </Flex>
+      </Grid>
     );
   }
 };

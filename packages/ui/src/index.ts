@@ -49,6 +49,9 @@ export type { EmProps } from "./components/Em";
 export { Flex } from "./components/Flex";
 export type { FlexProps } from "./components/Flex";
 
+export { FlexGrid } from "./components/FlexGrid";
+export type { FlexGridProps, FlexGridGap } from "./components/FlexGrid";
+
 export { Grid } from "./components/Grid";
 export type { GridProps } from "./components/Grid";
 
