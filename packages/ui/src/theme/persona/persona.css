@@ -1,0 +1,19 @@
+/*
+ * Fallback (base persona) defaults for the component tokens Radix Themes
+ * doesn't parameterize itself (accentColor/grayColor/radius/scaling
+ * are handled through ThemeProvider passing those straight through to
+ * Radix's own <Theme> props instead).
+ *
+ * The actual per-persona values are computed once, in one place —
+ * ./config.ts — and applied by ThemeProvider as inline CSS custom
+ * properties on its root element (inline styles inherit to all descendants
+ * and win over these :root rules). This file only exists so the tokens
+ * resolve to sane (base) values even before ThemeProvider mounts, or for
+ * markup that sets `data-persona` without going through it.
+ */
+
+:root {
+  --control-padding-y: 12px;
+  --table-row-height: 40px;
+  --motion-standard: 200ms;
+}

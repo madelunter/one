@@ -1,8 +1,11 @@
 import "./theme/theme.css";
 
 export { ThemeProvider } from "./theme";
+export type { OneDsThemeProps } from "./theme";
 export type { ThemeProps } from "./theme";
 export { accentColors, grayColors, radii, breakpoints, themePropDefs } from "./theme";
+export type { Persona, PersonaThemeConfig } from "./theme";
+export { personas, personaThemeConfig } from "./theme";
 
 export { Button } from "./components/Button";
 export type { ButtonProps } from "./components/Button";

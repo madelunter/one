@@ -32,14 +32,27 @@ const preview: Preview = {
         ],
         dynamicTitle: true
       }
+    },
+    persona: {
+      description: "Persona mode: base (shared foundation), personaB2B, personaB2C",
+      toolbar: {
+        title: "Persona",
+        icon: "user",
+        items: [
+          { value: "base", title: "Base" },
+          { value: "personaB2B", title: "Persona B2B" },
+          { value: "personaB2C", title: "Persona B2C" }
+        ],
+        dynamicTitle: true
+      }
     }
   },
 
-  initialGlobals: { appearance: "light" },
+  initialGlobals: { appearance: "light", persona: "base" },
 
   decorators: [
     (Story, context) => (
-      <ThemeProvider appearance={context.globals.appearance}>
+      <ThemeProvider appearance={context.globals.appearance} persona={context.globals.persona}>
         <div style={{ padding: 24 }}>
           <Story />
         </div>
